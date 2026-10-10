@@ -1,4 +1,4 @@
-# ASTRA — Astronaut Health Monitor
+# AETHRA  — Astronaut Health Monitor
 
 **NASA Space Apps Challenge 2026**
 
@@ -6,12 +6,12 @@
 
 ## Overview
 
-ASTRA is a proposed software prototype designed to support astronaut health monitoring during space missions. The project aims to provide an intuitive dashboard for visualizing health-related indicators, tracking changes over time, and highlighting potentially concerning readings.
+AETHRA is a proposed software prototype designed to support astronaut health monitoring during space missions. The project aims to provide an intuitive dashboard for visualizing health-related indicators, tracking changes over time, and highlighting potentially concerning readings.
 
 ## Objectives
 
 - Explore relevant NASA spaceflight and human health research data.
-- Visualize health-related indicators through a user-friendly dashboard.
+- Visualize health related indicators through a user friendly dashboard.
 - Track trends in available health data.
 - Demonstrate a basic alert mechanism for readings that may require attention.
 - Explore how data-driven software can support astronaut health monitoring.
@@ -45,7 +45,7 @@ The project concept and proposed features have been outlined. Implementation, da
 
 ## Important Note
 
-ASTRA is intended as an educational and research prototype, not a medical diagnostic system. Any simulated data used during development will be clearly identified as simulated and will not be presented as actual astronaut health measurements.
+AETHRA is intended as an educational and research prototype, not a medical diagnostic system. Any simulated data used during development will be clearly identified as simulated and will not be presented as actual astronaut health measurements.
 
 ## Team
 
