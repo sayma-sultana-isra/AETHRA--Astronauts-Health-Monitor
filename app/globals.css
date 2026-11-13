@@ -1,0 +1,326 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* AETHRA — LUNAR MISSION CONTROL / light orbital palette */
+:root {
+  color-scheme: light;
+  --bg: 242 244 248;
+  --bg2: 232 236 243;
+  --card: 255 255 255;
+  --line: 211 218 229;
+  --tx: 24 35 56;
+  --mute: 100 113 135;
+  --cyan: 39 91 214;       /* cobalt primary */
+  --teal: 13 148 112;      /* stable / success */
+  --warn: 197 111 26;      /* amber */
+  --crit: 205 59 67;       /* emergency red */
+  --navy: 20 29 47;        /* dark mission sidebar */
+  --navy2: 239 243 250;
+  --onaccent: 255 255 255;
+  --violet: 221 111 66;    /* warm spacecraft orange */
+}
+html { background: rgb(var(--bg)); color-scheme: light; font-size: 16px; scroll-behavior: smooth; }
+html.large-text { font-size: 19px; }
+body {
+  color: rgb(var(--tx)); -webkit-font-smoothing: antialiased; line-height: 1.6; overflow-x: hidden;
+  background-color: rgb(var(--bg));
+  background-image:
+    radial-gradient(ellipse 900px 500px at 92% -12%, rgb(39 91 214 / .075), transparent 68%),
+    radial-gradient(ellipse 720px 480px at 2% 82%, rgb(221 111 66 / .055), transparent 70%),
+    radial-gradient(1px 1px at 22px 30px, rgb(39 91 214 / .12), transparent 1.5px),
+    radial-gradient(1px 1px at 122px 92px, rgb(221 111 66 / .13), transparent 1.5px);
+  background-size: auto, auto, 190px 160px, 260px 210px;
+  background-attachment: fixed;
+}
+h1,h2,h3 { letter-spacing: -.025em; }
+::selection { background: rgb(var(--cyan) / .20); color: rgb(var(--tx)); }
+:focus-visible { outline: 3px solid rgb(var(--cyan)); outline-offset: 3px; border-radius: 7px; }
+input,select,textarea { font: inherit; }
+input[type=range],input[type=checkbox],input[type=radio] { accent-color: rgb(var(--cyan)); }
+input[type=date]::-webkit-calendar-picker-indicator { filter: none; }
+select option { background: rgb(var(--card)); color: rgb(var(--tx)); }
+* { scrollbar-width: thin; scrollbar-color: rgb(166 178 198) transparent; }
+.skip { position:absolute; left:-999px; top:0; z-index:100; background:rgb(var(--cyan)); color:#fff; padding:12px 16px; font-weight:700; }
+.skip:focus { left:8px; top:8px; }
+
+.eyebrow { font-family:theme('fontFamily.mono'); font-size:10px; font-weight:700; letter-spacing:.19em; text-transform:uppercase; color:rgb(var(--mute)); }
+.panel-title { display:flex; align-items:center; gap:.65rem; font-size:.82rem; font-weight:750; letter-spacing:.075em; text-transform:uppercase; color:rgb(var(--tx)); }
+.panel-title::before { content:''; width:3px; height:17px; border-radius:5px; background:linear-gradient(180deg,#275bd6,#dd6f42); box-shadow:0 0 10px rgb(39 91 214 / .18); }
+.hero-orbit { position:relative; overflow:hidden; isolation:isolate; background:radial-gradient(ellipse 460px 300px at 85% 5%,rgb(39 91 214 / .18),transparent 70%),radial-gradient(ellipse 360px 300px at 0% 100%,rgb(221 111 66 / .15),transparent 70%),linear-gradient(130deg,#243b67 0%,#172943 55%,#142033 100%); color:#fff; }
+.hero-orbit::after { content:''; position:absolute; z-index:-1; width:310px; height:310px; right:-90px; bottom:-210px; border-radius:50%; border:1px solid rgb(255 255 255 / .28); box-shadow:0 0 0 18px rgb(255 255 255 / .035),0 0 0 38px rgb(255 255 255 / .025),inset 0 12px 45px rgb(39 91 214 / .12); }
+@keyframes pulse-dot { 0%,100% { opacity:1; box-shadow:0 0 0 0 rgb(var(--teal)/.28); } 50% { opacity:.6; box-shadow:0 0 0 6px rgb(var(--teal)/0); } }
+.pulse-dot { animation:pulse-dot 2.2s ease-in-out infinite; }
+
+/* Persistent app chrome */
+.aethra-shell { position:relative; }
+.aethra-sidebar { background:linear-gradient(180deg,#1b2942 0%,#121c2e 100%) !important; border-color:#2c3c59 !important; box-shadow:14px 0 38px rgb(22 35 58 / .13); color:#f4f6fb; }
+.aethra-sidebar::after { content:''; position:fixed; left:0; bottom:0; width:255px; height:180px; pointer-events:none; background:radial-gradient(ellipse at 50% 100%,rgb(221 111 66 / .17),transparent 70%); }
+.aethra-brand { position:relative; margin:0 12px 12px; padding:22px 12px 18px !important; border-bottom:1px solid rgb(255 255 255 / .13); }
+.aethra-brand-mark { filter:drop-shadow(0 0 12px rgb(221 111 66 / .22)); }
+.aethra-nav a { margin:2px 0; border:1px solid transparent; border-radius:10px !important; color:#b9c5d8 !important; }
+.aethra-nav a:hover { background:rgb(255 255 255 / .07) !important; color:#fff !important; }
+.aethra-nav a[aria-current="page"] { background:linear-gradient(100deg,rgb(39 91 214 / .30),rgb(221 111 66 / .12)) !important; border-color:rgb(125 160 235 / .32); color:#fff !important; box-shadow:inset 3px 0 0 #f08a54,0 5px 18px rgb(0 0 0 / .12); }
+.aethra-nav .eyebrow { color:#91a1bb !important; }
+.aethra-topbar { background:rgb(255 255 255 / .92) !important; border-color:rgb(var(--line)) !important; box-shadow:0 5px 22px rgb(26 43 70 / .055); }
+.aethra-main { position:relative; }
+.aethra-footer { border-top:1px solid rgb(var(--line)/.8); padding-top:18px; }
+
+/* Reusable components */
+.a-card { background:linear-gradient(145deg,#fff 0%,#fbfcfe 100%) !important; border-color:#d8dfeb !important; border-radius:16px !important; box-shadow:0 1px 0 rgb(255 255 255 / .9) inset,0 9px 28px -20px rgb(25 42 70 / .28) !important; transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease; }
+.a-card:hover { border-color:rgb(39 91 214 / .38) !important; box-shadow:0 1px 0 #fff inset,0 14px 32px -22px rgb(25 42 70 / .28),0 0 0 1px rgb(39 91 214 / .06) !important; }
+.a-page-head { border-color:rgb(var(--line)/.9) !important; }
+.a-page-head h1 { letter-spacing:-.045em !important; color:#182338; }
+.a-btn { border-radius:9px !important; font-weight:650; letter-spacing:.01em; }
+.a-btn-primary { background:linear-gradient(110deg,#275bd6,#3978e8) !important; border-color:#275bd6 !important; color:#fff !important; box-shadow:0 6px 16px rgb(39 91 214 / .20); }
+.a-stat { background:linear-gradient(145deg,#fff,#f6f8fc) !important; border-color:#d8dfeb !important; border-radius:13px !important; }
+.a-input { background:#fff !important; border-color:#cbd4e2 !important; border-radius:9px !important; color:#182338 !important; }
+.a-input::placeholder { color:#8995a8 !important; }
+.a-input:focus { border-color:#275bd6 !important; box-shadow:0 0 0 3px rgb(39 91 214 / .12); }
+.a-callout { border-radius:12px !important; backdrop-filter:blur(8px); }
+
+/* Make utility-driven surfaces follow the new light palette. */
+.bg-bg { background-color:rgb(var(--bg)) !important; }
+.bg-bg2 { background-color:rgb(var(--bg2)) !important; }
+.bg-card { background-color:rgb(var(--card)) !important; }
+.text-tx { color:rgb(var(--tx)) !important; }
+.text-mute { color:rgb(var(--mute)) !important; }
+.border-line { border-color:rgb(var(--line)) !important; }
+.bg-cyan { background-color:rgb(var(--cyan)) !important; }
+.text-cyan { color:rgb(var(--cyan)) !important; }
+.border-cyan { border-color:rgb(var(--cyan)) !important; }
+.bg-navy { background-color:rgb(var(--navy)) !important; }
+.bg-navy2 { background-color:rgb(var(--navy2)) !important; }
+.text-onaccent { color:rgb(var(--onaccent)) !important; }
+
+@media (max-width:1023px) { .aethra-main { padding-top:18px; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+html.reduce-motion * { animation:none !important; transition:none !important; }
+@media print {
+  :root { color-scheme:light; --bg:255 255 255; --bg2:241 244 248; --card:255 255 255; --line:205 213 225; --tx:15 27 45; --mute:82 98 122; --cyan:11 83 190; --teal:10 107 82; --warn:138 83 0; --crit:179 38 30; }
+  aside,header { display:none !important; } body { background:#fff !important; }
+  .a-card,.a-stat { background:#fff !important; box-shadow:none !important; }
+}
+
+/* AETHRA — soft Mars / galaxy atmosphere. Keeps the interface readable. */
+html { background: #dce3ef; }
+body {
+  background-color: #dce3ef;
+  background-image:
+    linear-gradient(115deg, rgb(239 242 248 / .62), rgb(235 231 239 / .48)),
+    url('/mars-galaxy.svg');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.aethra-shell { isolation: isolate; }
+.aethra-main { z-index: 0; }
+.aethra-topbar {
+  background: rgb(239 243 250 / .72) !important;
+  border-color: rgb(255 255 255 / .58) !important;
+  box-shadow: 0 8px 28px rgb(38 48 76 / .07) !important;
+  backdrop-filter: blur(18px) saturate(135%);
+}
+.a-card {
+  background: rgb(250 252 255 / .76) !important;
+  border-color: rgb(255 255 255 / .72) !important;
+  box-shadow: 0 8px 30px rgb(49 58 86 / .075), inset 0 1px 0 rgb(255 255 255 / .72) !important;
+  backdrop-filter: blur(16px) saturate(125%);
+}
+.a-card:hover {
+  background: rgb(255 255 255 / .86) !important;
+  border-color: rgb(39 91 214 / .32) !important;
+}
+.a-stat {
+  background: rgb(248 250 255 / .78) !important;
+  backdrop-filter: blur(12px);
+}
+.aethra-footer { border-color: rgb(255 255 255 / .62); }
+/* Subtle atmospheric tint for common utility surfaces without dimming text. */
+.bg-bg { background-color: rgb(226 232 242 / .70) !important; }
+.bg-bg2 { background-color: rgb(219 226 239 / .72) !important; }
+.bg-card { background-color: rgb(250 252 255 / .78) !important; }
+@media (max-width: 1023px) {
+  body { background-attachment: scroll; }
+}
+@media print {
+  body { background: #fff !important; }
+  .a-card, .a-stat, .aethra-topbar { backdrop-filter: none !important; background: #fff !important; }
+}
+
+
+/* AETHRA — single astronaut/Earth image background and high-contrast typography. */
+html, body { min-height: 100%; }
+html { background: #020812; }
+body {
+  background-color: #020812 !important;
+  background-image:
+    linear-gradient(110deg, rgb(2 8 18 / .30), rgb(3 12 26 / .22) 52%, rgb(2 8 18 / .34)),
+    url('/space-backgrounds/astronaut-earth.webp') !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-size: cover, cover !important;
+  background-position: center, center 38% !important;
+  background-attachment: fixed !important;
+}
+
+/* Translucent dark glass surfaces let the photo remain visible. */
+.aethra-topbar {
+  color: #f4f8ff !important;
+  background: rgb(5 16 32 / .72) !important;
+  border-color: rgb(185 211 245 / .25) !important;
+  backdrop-filter: blur(14px) saturate(125%) !important;
+}
+.a-card, .a-stat {
+  color: #f3f7ff !important;
+  background: rgb(5 18 36 / .72) !important;
+  border-color: rgb(180 207 243 / .27) !important;
+  box-shadow: 0 10px 34px rgb(0 0 0 / .20), inset 0 1px 0 rgb(255 255 255 / .10) !important;
+  backdrop-filter: blur(13px) saturate(125%) !important;
+}
+.a-card:hover { background: rgb(8 25 48 / .79) !important; }
+
+/* Replace low-contrast black/navy text with readable light tones. */
+body, main, section, article, .aethra-main,
+.a-card, .a-stat, .aethra-topbar {
+  color: #edf4ff;
+}
+h1, h2, h3, h4, h5, h6,
+.a-page-head h1, .a-card h1, .a-card h2, .a-card h3,
+.a-stat h1, .a-stat h2, .a-stat h3 {
+  color: #ffffff !important;
+}
+p, li, label, small, .text-tx, .text-black, .text-gray-900,
+.text-gray-800, .text-slate-900, .text-slate-800,
+.text-blue-950, .text-blue-900, .text-indigo-950 {
+  color: #e5efff !important;
+}
+.text-mute, .text-gray-700, .text-gray-600,
+.text-slate-700, .text-slate-600 {
+  color: #b9cbe3 !important;
+}
+a:not(.aethra-nav a) { color: #8fc8ff; }
+a:not(.aethra-nav a):hover { color: #c4e4ff; }
+
+/* Preserve clear semantic status colors. */
+.text-green-700, .text-emerald-700 { color: #72e3b0 !important; }
+.text-yellow-700, .text-amber-700 { color: #ffd27a !important; }
+.text-red-700, .text-rose-700 { color: #ff9b9b !important; }
+.text-cyan, .text-cyan-700 { color: #8be7ff !important; }
+
+/* Form controls and placeholders need the same contrast treatment. */
+.a-input, input, select, textarea {
+  color: #f3f7ff !important;
+  background: rgb(3 13 27 / .82) !important;
+  border-color: rgb(180 207 243 / .34) !important;
+}
+.a-input::placeholder, input::placeholder, textarea::placeholder {
+  color: #a9bdd8 !important;
+}
+input:disabled, select:disabled, textarea:disabled { color: #aabbd1 !important; }
+
+/* Tailwind-style dark text utility overrides often used in dashboard widgets. */
+.text-black, [class~="text-[#0f172a]"], [class~="text-[#111827]"],
+[class~="text-[#1e293b]"], [class~="text-[#172033]"] {
+  color: #edf4ff !important;
+}
+.bg-white { background-color: rgb(5 18 36 / .72) !important; }
+.border-gray-200, .border-slate-200 { border-color: rgb(180 207 243 / .24) !important; }
+
+@media (max-width: 1023px) {
+  body { background-attachment: scroll !important; background-position: center top !important; }
+}
+@media print {
+  body { background: #fff !important; color: #111 !important; }
+  .a-card, .a-stat, .aethra-topbar {
+    color: #111 !important; background: #fff !important; backdrop-filter: none !important;
+  }
+}
+
+
+/* Extra-transparent variant: let the astronaut/Earth photo show through more. */
+body {
+  background-image:
+    linear-gradient(110deg, rgb(2 8 18 / .12), rgb(3 12 26 / .08) 52%, rgb(2 8 18 / .14)),
+    url('/space-backgrounds/astronaut-earth.webp') !important;
+}
+.aethra-topbar {
+  background: rgb(5 16 32 / .42) !important;
+  backdrop-filter: blur(9px) saturate(120%) !important;
+}
+.a-card {
+  background: rgb(5 18 36 / .40) !important;
+  backdrop-filter: blur(8px) saturate(118%) !important;
+}
+.a-card:hover { background: rgb(8 25 48 / .50) !important; }
+.a-stat {
+  background: rgb(5 18 36 / .44) !important;
+  backdrop-filter: blur(7px) saturate(115%) !important;
+}
+.bg-bg { background-color: rgb(9 20 36 / .38) !important; }
+.bg-bg2 { background-color: rgb(13 27 47 / .42) !important; }
+.bg-card { background-color: rgb(13 27 48 / .44) !important; }
+.bg-white { background-color: rgb(5 18 36 / .42) !important; }
+
+
+/* Lower the photograph's visual intensity while preserving the transparent UI. */
+body {
+  background-image:
+    linear-gradient(110deg, rgb(2 8 18 / .30), rgb(3 12 26 / .26) 52%, rgb(2 8 18 / .32)),
+    url('/space-backgrounds/astronaut-earth.webp') !important;
+}
+
+
+/* Form-label contrast fix: make dark navy field labels clearly readable. */
+label,
+label *,
+.a-label,
+.field-label,
+.form-label,
+.input-label,
+label[class*="text-"],
+[class*="label"] {
+  color: #eaf3ff !important;
+}
+
+/* Common muted/dark utility classes used on form labels and helper copy. */
+.text-slate-950, .text-slate-900, .text-slate-800, .text-slate-700,
+.text-gray-950, .text-gray-900, .text-gray-800, .text-gray-700,
+.text-blue-950, .text-blue-900, .text-blue-800, .text-indigo-950,
+.text-navy, .text-muted, .text-mute {
+  color: #c9d9ee !important;
+}
+
+/* Keep section captions and measurement labels brighter than helper text. */
+.a-card label, .a-card .a-label, .a-card .field-label,
+.a-card [class*="label"] {
+  color: #f0f6ff !important;
+}
+
+
+/* AETHRA usability pass: quieter background, clearer content surfaces. */
+body {
+  background-image:
+    linear-gradient(110deg, rgb(2 8 18 / .72), rgb(3 12 26 / .66) 52%, rgb(2 8 18 / .74)),
+    url('/space-backgrounds/astronaut-earth.webp') !important;
+  background-size: cover, cover !important;
+  background-position: center, center 38% !important;
+}
+.aethra-topbar {
+  background: rgb(5 16 32 / .88) !important;
+  border-color: rgb(185 211 245 / .32) !important;
+}
+.a-card, .a-stat {
+  background: rgb(5 18 36 / .88) !important;
+  border-color: rgb(180 207 243 / .32) !important;
+  backdrop-filter: blur(16px) saturate(115%) !important;
+}
+.a-card:hover { background: rgb(8 25 48 / .92) !important; }
+.aethra-main { max-width: 1320px; }
+.a-page-head { margin-bottom: 1.25rem !important; padding-bottom: 1rem !important; }
+.panel-title { font-size: .78rem; letter-spacing: .045em; }
+.a-card > .panel-title, .a-card .mb-4.flex { margin-bottom: .8rem !important; }
+.aethra-nav a { min-height: 40px !important; margin: 1px 0 !important; }
+.aethra-nav > div { margin-top: .85rem !important; }
+.aethra-brand { padding-top: 16px !important; padding-bottom: 12px !important; }
+.aethra-footer { opacity: .72; }

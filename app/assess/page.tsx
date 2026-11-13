@@ -1,0 +1,56 @@
+'use client';
+import Link from 'next/link'; import { useState } from 'react'; import { Bot, Send, TriangleAlert } from 'lucide-react';
+import { Btn, Card, NoData, PageHead, StatusBadge, Bullets, Disclaimer, inputCls, SourceTag, Callout } from '@/components/ui'; import { useApp } from '@/lib/store'; import OSDEvidence from '@/components/OSDEvidence'; import { AMBER_SYMPTOMS, RED_SYMPTOMS } from '@/lib/rules'; import { KNOWLEDGE } from '@/lib/content'; import { CLINICAL_REFERENCE_SOURCES } from '@/lib/rules'; import LabPanel from '@/components/LabPanel';
+
+const URGENT = /chest pain|can'?t breathe|cannot breathe|unconscious|passed out|severe bleeding|bleeding a lot|allergic reaction|sudden confusion|heart attack|stroke/i;
+function answer(q: string, a: NonNullable<ReturnType<typeof useApp>['assessment']>): { urgent: boolean; text: string; title: string } {
+  const t = q.toLowerCase(); if (URGENT.test(q)) return { urgent: true, title: 'Possible emergency', text: 'This sounds urgent. Do not wait for an answer here — alert crew and open the Emergency Center now.' };
+  if (/recent|trend|changed|lately|week|pattern/.test(t)) { const o = a.observations.filter((x) => x.level > 0); return { urgent: false, title: 'Recent changes', text: o.length ? o.map((x) => `${x.label}: ${x.detail}`).join(' ') + (a.patterns.length ? ` Patterns: ${a.patterns.join('; ')}.` : '') : 'Nothing is currently flagged against your baseline.' }; }
+  const hits = KNOWLEDGE.map((k) => ({ k, n: k.keys.filter((w) => t.includes(w)).length })).filter((x) => x.n).sort((x, y) => y.n - x.n);
+  if (!hits.length) return { urgent: false, title: 'Not in my knowledge base', text: 'I can only answer from a small curated knowledge base (heart rate, blood pressure, SpO₂, temperature, sleep, fatigue, mood, hydration, glucose, baselines, status colours). Try one of the suggested questions, or ask the crew medical officer.' };
+  let text = hits[0].k.a; if (/heart|bpm|pulse/.test(t) && /why|changing/.test(t)) { const h = a.observations.find((o) => /Heart rate/.test(o.label)); if (h) text = `${h.label}: ${h.detail} ` + text; }
+  return { urgent: false, title: hits[0].k.title, text };
+}
+export default function Assess() {
+  const { profile, assessment, s, set } = useApp(); const [sel, setSel] = useState<string[]>(s.symptoms[s.activeId]?.ids ?? []); const [q, setQ] = useState(''); const [chat, setChat] = useState<{ q: string; r: ReturnType<typeof answer> }[]>([]); const [msg, setMsg] = useState('');
+  if (!profile || !assessment) return <NoData />;
+  const redSel = sel.some((x) => RED_SYMPTOMS[x]);
+  const toggle = (id: string) => setSel((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
+  const apply = () => { set((x) => { const sy = { ...x.symptoms }; if (sel.length) sy[x.activeId] = { ts: Date.now(), ids: sel }; else delete sy[x.activeId]; return { ...x, symptoms: sy }; }); setMsg(sel.length ? 'Symptoms recorded and assessment updated.' : 'Symptoms cleared.'); };
+  const ask = (text: string) => { if (!text.trim()) return; setChat((c) => [...c, { q: text, r: answer(text, assessment) }]); setQ(''); };
+  return (
+    <div className="space-y-6">
+      <PageHead crumb="Health monitoring" title="Health Assessment" sub={`Status, key signals and recommended next steps for ${profile.name}.`} />
+      <div className="grid gap-4 lg:grid-cols-3">
+        <Card title="Assessment result" className="lg:col-span-2"><div className="flex flex-wrap items-center gap-3"><StatusBadge s={assessment.status} big /><span className="text-xs text-mute">Data completeness {assessment.completeness}% · rules {assessment.version}</span></div>
+          <p className="mt-3 text-sm"><b>Why this status:</b> {assessment.statusReason}</p>
+          {assessment.status === 'UNKNOWN' && <div className="mt-3"><Callout tone="warn" title="UNKNOWN does not mean healthy">There is not enough recent data for a reliable assessment. Take the missing measurements in Health Check. If you feel unwell, report symptoms or use the Emergency Center.</Callout></div>}
+          <h3 className="mb-1 mt-4 text-sm font-semibold">Findings</h3>
+          <div className="overflow-x-auto"><table className="w-full min-w-[720px] text-sm"><caption className="sr-only">Assessment findings with value, baseline, deviation, time, source and reason</caption><thead className="text-left text-xs text-mute"><tr><th scope="col" className="py-1">Finding</th><th scope="col">Current</th><th scope="col">Your baseline</th><th scope="col">Change</th><th scope="col">Recorded</th><th scope="col">Source</th></tr></thead><tbody>
+            {assessment.observations.map((o, i) => <tr key={i} className="border-t border-line align-top"><th scope="row" className="py-2 pr-2 text-left font-medium"><span className={o.level === 2 ? 'text-crit' : o.level === 1 ? 'text-warn' : 'text-teal'}>{['OK', 'ATTENTION', 'URGENT'][o.level]}</span> · {o.label}{o.why && <div className="text-xs font-normal text-mute">Rule: {o.why}</div>}{!o.value && <div className="text-xs font-normal text-mute">{o.detail}</div>}</th><td className="font-mono">{o.value ?? '—'}</td><td className="font-mono text-mute">{o.baseline ?? '—'}</td><td className="font-mono">{o.deviation ?? '—'}</td><td className="text-xs">{o.at ? new Date(o.at).toLocaleString() : '—'}</td><td>{o.source ? <SourceTag s={o.source} /> : '—'}</td></tr>)}
+            {!assessment.observations.length && <tr><td colSpan={6} className="py-3 text-mute">No usable findings yet.</td></tr>}</tbody></table></div>
+          <div className="mt-4 grid gap-4 text-sm md:grid-cols-2">
+            <div><h3 className="mb-1 font-semibold">Possible contributing factors</h3>{assessment.factors.length ? <Bullets items={assessment.factors} /> : <p className="text-mute">None identified.</p>}<p className="mt-1 text-xs text-mute">Indicators that move together are not proof of a cause, and are not counted twice in the status.</p></div>
+            <div><h3 className="mb-1 font-semibold">Data quality notes</h3>{assessment.quality.length ? <Bullets items={assessment.quality} /> : <p className="text-mute">No issues.</p>}</div></div>
+          <div className="mt-4 grid gap-4 border-t border-line pt-4 text-sm md:grid-cols-3"><div><h3 className="mb-1 font-semibold">Recommended reassessment</h3><p className="text-mute">{assessment.reassess}</p></div><div><h3 className="mb-1 font-semibold">Next steps</h3><Bullets items={assessment.next} /></div><div><h3 className="mb-1 font-semibold">Escalation</h3><Bullets items={assessment.escalation} /></div></div>
+          <p className="mt-4 text-xs text-mute">Method: (1) red-flag symptoms and critical rules, (2) recency and sufficiency of data, (3) comparison with your baseline, (4) recent trend, (5) combined patterns, (6) environment context. No trained AI model is used. A single abnormal value does not prove a condition. NASA OSD intervals are used only for compatible laboratory analytes; general adult reference guidance is not a mission-approved spaceflight protocol. Sleep, glucose, temperature and selected urgent cut-offs remain prototype heuristics.</p><div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs">{CLINICAL_REFERENCE_SOURCES.map((src) => { const [label, url] = src.split(': https://'); return <a key={label} className="text-cyan underline" href={`https://${url}`} target="_blank" rel="noopener noreferrer">{label}</a>; })}</div>
+          {assessment.status === 'RED' && <Link href="/emergency" className="mt-3 block rounded-lg bg-crit p-3 text-center font-semibold text-onaccent">Open Emergency Center</Link>}
+        </Card>
+        <Card title="Report symptoms"><div className="space-y-3 text-sm">
+          <fieldset><legend className="mb-1 font-semibold text-crit">Urgent symptoms</legend>{Object.entries(RED_SYMPTOMS).map(([k, v]) => <label key={k} className="flex min-h-[40px] items-center gap-2"><input type="checkbox" className="h-5 w-5 accent-[#FF6B6B]" checked={sel.includes(k)} onChange={() => toggle(k)} />{v}</label>)}</fieldset>
+          <fieldset><legend className="mb-1 font-semibold text-warn">Other symptoms</legend>{Object.entries(AMBER_SYMPTOMS).map(([k, v]) => <label key={k} className="flex min-h-[40px] items-center gap-2"><input type="checkbox" className="h-5 w-5 accent-[#F7B948]" checked={sel.includes(k)} onChange={() => toggle(k)} />{v}</label>)}</fieldset>
+          {redSel && <div role="alert" className="flex gap-2 rounded-lg border border-crit bg-crit/10 p-3 text-crit"><TriangleAlert size={18} aria-hidden /><span>Urgent symptom selected. <Link href="/emergency" className="font-semibold underline">Go to Emergency Center now</Link> — do not wait on this form.</span></div>}
+          <Btn variant="primary" className="w-full" onClick={apply}>Update assessment</Btn>{msg && <p role="status" className="text-teal">{msg}</p>}</div></Card>
+      </div>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Need an explanation? Open Health Explainer</summary><div className="mt-3"><Card title="Health Explainer" right={<Bot size={16} className="text-cyan" aria-hidden />}>
+        <p className="mb-3 text-xs text-mute">Answers come from a small curated knowledge base and your own assessment data — no external AI and no API key. It is explanatory, not an approved medical protocol, and never decides whether an emergency is safe.</p>
+        <div className="mb-3 flex flex-wrap gap-2">{['Why is my heart rate changing?', 'Why do I need this measurement?', 'What does this warning mean?', 'How do I perform this assessment?', 'What health trends have changed recently?'].map((x) => <button key={x} onClick={() => ask(x)} className="min-h-[40px] rounded-full border border-line bg-bg2 px-3 text-xs hover:border-cyan">{x}</button>)}</div>
+        <div className="space-y-3" aria-live="polite">{chat.map((c, i) => <div key={i} className="text-sm"><div className="text-mute">You: {c.q}</div><div className={`mt-1 rounded-lg border p-3 ${c.r.urgent ? 'border-crit bg-crit/10' : 'border-line bg-bg2'}`}><b>{c.r.title}</b><p className="mt-1">{c.r.text}</p>{c.r.urgent && <Link href="/emergency" className="mt-2 inline-block font-semibold text-crit underline">Open Emergency Center</Link>}</div></div>)}</div>
+        <div className="mt-3 flex gap-2"><input className={inputCls} placeholder="Ask about a measurement, warning or trend…" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && ask(q)} aria-label="Ask a question" /><Btn variant="primary" onClick={() => ask(q)} aria-label="Send"><Send size={16} /></Btn></div>
+      </Card></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Advanced laboratory data</summary><div className="mt-3"><LabPanel mode="summary" title="Integrated laboratory assessment" /></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">NASA research context (optional)</summary><div className="mt-3"><OSDEvidence domain="all" title="NASA research evidence available to this assessment" /></div></details>
+      <Disclaimer />
+    </div>
+  );
+}

@@ -1,0 +1,303 @@
+{
+  "version": 1,
+  "notice": "Intervals are reproduced from supplied NASA OSD transformed laboratory files. They are study/source-provided comparison intervals, not universal astronaut clinical thresholds. Confirm patient, assay, units and mission medical protocol before clinical use.",
+  "references": [
+    {
+      "key": "absolute_basophils",
+      "label": "Absolute Basophils",
+      "unit": "cells_per_microliter",
+      "min": 0.0,
+      "max": 200.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "absolute_eosinophils",
+      "label": "Absolute Eosinophils",
+      "unit": "cells_per_microliter",
+      "min": 15.0,
+      "max": 500.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "absolute_lymphocytes",
+      "label": "Absolute Lymphocytes",
+      "unit": "cells_per_microliter",
+      "min": 850.0,
+      "max": 3900.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "absolute_monocytes",
+      "label": "Absolute Monocytes",
+      "unit": "cells_per_microliter",
+      "min": 200.0,
+      "max": 950.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "absolute_neutrophils",
+      "label": "Absolute Neutrophils",
+      "unit": "cells_per_microliter",
+      "min": 1500.0,
+      "max": 7800.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "basophils",
+      "label": "Basophils",
+      "unit": "percent",
+      "min": 0.0,
+      "max": 2.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "eosinophils",
+      "label": "Eosinophils",
+      "unit": "percent",
+      "min": 0.0,
+      "max": 8.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "lymphocytes",
+      "label": "Lymphocytes",
+      "unit": "percent",
+      "min": 15.0,
+      "max": 49.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "mch",
+      "label": "Mch",
+      "unit": "picogram",
+      "min": 27.0,
+      "max": 33.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "mchc",
+      "label": "Mchc",
+      "unit": "grams_per_deciliter",
+      "min": 32.0,
+      "max": 36.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "mcv",
+      "label": "Mcv",
+      "unit": "femtoliter",
+      "min": 80.0,
+      "max": 100.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "monocytes",
+      "label": "Monocytes",
+      "unit": "percent",
+      "min": 0.0,
+      "max": 13.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "mpv",
+      "label": "Mpv",
+      "unit": "femtoliter",
+      "min": 7.5,
+      "max": 12.5,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "neutrophils",
+      "label": "Neutrophils",
+      "unit": "percent",
+      "min": 38.0,
+      "max": 80.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "platelet_count",
+      "label": "Platelet Count",
+      "unit": "thousand_per_microliter",
+      "min": 140.0,
+      "max": 400.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "rdw",
+      "label": "Rdw",
+      "unit": "percent",
+      "min": 11.0,
+      "max": 15.0,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "white_blood_cell_count",
+      "label": "White Blood Cell Count",
+      "unit": "thousand_per_microliter",
+      "min": 3.8,
+      "max": 10.8,
+      "study": "OSD-569",
+      "matrix": "whole-blood",
+      "sourceFile": "LSDS-7_Complete_Blood_Count_CBC_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "albumin",
+      "label": "Albumin",
+      "unit": "gram_per_deciliter",
+      "min": 3.6,
+      "max": 5.1,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "total_bilirubin",
+      "label": "Total Bilirubin",
+      "unit": "milligram_per_deciliter",
+      "min": 0.2,
+      "max": 1.2,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "carbon_dioxide",
+      "label": "Carbon Dioxide",
+      "unit": "millimol_per_liter",
+      "min": 20.0,
+      "max": 32.0,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "chloride",
+      "label": "Chloride",
+      "unit": "millimol_per_liter",
+      "min": 98.0,
+      "max": 110.0,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "globulin",
+      "label": "Globulin",
+      "unit": "gram_per_deciliter",
+      "min": 1.9,
+      "max": 3.7,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "glucose",
+      "label": "Glucose",
+      "unit": "milligram_per_deciliter",
+      "min": 65.0,
+      "max": 99.0,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "potassium",
+      "label": "Potassium",
+      "unit": "millimol_per_liter",
+      "min": 3.5,
+      "max": 5.3,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "total_protein",
+      "label": "Total Protein",
+      "unit": "gram_per_deciliter",
+      "min": 6.1,
+      "max": 8.1,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "sodium",
+      "label": "Sodium",
+      "unit": "millimol_per_liter",
+      "min": 135.0,
+      "max": 146.0,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    },
+    {
+      "key": "urea_nitrogen_bun",
+      "label": "Urea Nitrogen Bun",
+      "unit": "milligram_per_deciliter",
+      "min": 7.0,
+      "max": 25.0,
+      "study": "OSD-575",
+      "matrix": "serum",
+      "sourceFile": "LSDS-8_Comprehensive_Metabolic_Panel_CMP_TRANSFORMED.csv",
+      "referenceType": "source-supplied-laboratory-interval"
+    }
+  ]
+}
